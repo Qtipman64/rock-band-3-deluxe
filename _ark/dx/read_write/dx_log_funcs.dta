@@ -111,13 +111,13 @@
          {set $dx_log_reader_stage ()}
          {set $dx_log_reader_stage {array $dx_log_reader_stage}}
       }
-      {push_back $dx_log_reader_stage {sprint $dx_log_writer}}
       {if {!= $dx_log_writer poop}
-         {if {== $loglevel write}
-            {write_file "GD:/dev_hdd0/game/BLUS30463/USRDIR/stagekit_data.dta"
-               {array
-                  $dx_log_reader_stage
-               }
+         {push_back $dx_log_reader_stage {sprint $dx_log_writer}}
+      }
+      {if {== $loglevel write}
+         {write_file "GD:/dev_hdd0/game/BLUS30463/USRDIR/stagekit_data.dta"
+            {array
+               $dx_log_reader_stage
             }
          }
       }
