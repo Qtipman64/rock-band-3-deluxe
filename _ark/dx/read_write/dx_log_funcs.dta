@@ -67,6 +67,7 @@
                {&& $dx_logging_essential {> {size $dx_log_reader} 75}}
                {&& $dx_logging_default {> {size $dx_log_reader} 75}}
                {&& $dx_logging_info {> {size $dx_log_reader} 150}}
+               {&& $dx_logging_stagekit {> {size $dx_log_reader} 150}}
                {&& $dx_logging_insane {> {size $dx_log_reader} 150}}
                {&& $dx_logging_beatmatch {> {size $dx_log_reader} 350}}
                {&& $dx_logging_countdown {> {size $dx_log_reader} 350}}
@@ -97,6 +98,27 @@
                }
             }
             #endif
+         }
+      }
+   }
+}
+
+{func
+   dx_log_writer_stagekit
+   ($loglevel $dx_log_writer)
+   {do
+      {if_else {== $loglevel wipe}
+         {set $dx_log_reader_stage ()}
+         {set $dx_log_reader_stage {array $dx_log_reader_stage}}
+      }
+      {push_back $dx_log_reader_stage {sprint $dx_log_writer}}
+      {unless {== $dx_log_writer poop}
+         {if {== $loglevel write}
+            {write_file "GD:/dev_hdd0/game/BLUS30463/USRDIR/stagekit_data.dta"
+               {array
+                  $dx_log_reader_stage
+               }
+            }
          }
       }
    }

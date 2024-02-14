@@ -28,6 +28,10 @@
    #ifdef HX_XBOX "GAME:/dx_playlist.dta" #endif
    #ifdef HX_PS3 "GD:/dev_hdd0/game/BLUS30463/USRDIR/dx_playlist.dta" #endif
 )
+#define DX_LOG_FILESTAGE_KIT_PATH
+(
+   #ifdef HX_PS3 "GD:/dev_hdd0/game/BLUS30463/USRDIR/stagekit_data.dta" #endif
+)
 ;deprecated config files (to print the deprecated message)
 #define DX_DEPRECATED_SETTINGS_FILE_PATH
 (

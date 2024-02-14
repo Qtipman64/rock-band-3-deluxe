@@ -1900,8 +1900,8 @@
                      $mp.val
                      "FogOff"}
                   {$this add_fog_keyframe off})}})}
-   {if
-      {stagekit_present}
+   {if TRUE
+      ;{stagekit_present}
       {new
          MidiParser
          stagekit_bass_parser
@@ -2386,6 +2386,12 @@
                               $cat
                               {$this get_adjective}
                               {beat_to_seconds $mp.start}}
+                           {switch $mp.val
+                              (verse {dx_log_writer_stagekit stagekit {sprint "(verse) - Start: " {beat_to_seconds $mp.start}}})
+                              (chorus {dx_log_writer_stagekit stagekit {sprint "(chorus) - Start: " {beat_to_seconds $mp.start}}})
+                              (lighting {dx_log_writer_stagekit stagekit {sprint {elem $mp.data 1} " - Start: " {beat_to_seconds $mp.start}}})
+                              kDataUnhandled
+                           }
                            {set
                               [legacy_presets]
                               TRUE}}}})}

@@ -82,3 +82,22 @@
       ;{dx_log_writer info {sprint "drum trainer checker - " $dx_trainer_real_drum}}
    )
 }
+{new
+   MidiParser
+   beat_parser
+   (track_name 'BEAT')
+   (midi
+      ;{dx_log_writer insane {sprint "func: check_trainer_pro_guitar"}}
+      ;{dx_log_writer insane
+      ;   {sprintf "Executed check_trainer_pro_guitar - time: %.4fms"
+      ;      {time
+               {switch
+                  $mp.val
+                  (12 {dx_log_writer_stagekit stagekit {sprint "(major) - " {beat_to_seconds $mp.start}}})
+                  (13 {dx_log_writer_stagekit stagekit {sprint "(minor) - " {beat_to_seconds $mp.start}}})
+                  kDataUnhandled}
+      ;      }
+      ;   }
+      ;}
+   )
+}

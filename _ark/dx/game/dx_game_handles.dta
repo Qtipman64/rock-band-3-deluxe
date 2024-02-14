@@ -1,6 +1,7 @@
 #define DX_GAME_PANEL_HANDLES
 (
    (dx_on_game_enter
+      {dx_log_writer_stagekit write poop}
       {dx_log_writer info {sprint "func: dx_on_game_enter"}}
       {dx_log_writer info
          {sprintf "Executed dx_on_game_enter - time: %.4fms"

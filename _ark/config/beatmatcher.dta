@@ -1,5 +1,6 @@
 (callbacks
    (sixteenth_note
+      {dx_get_current_beat_sec}
       {if_else
          $stagekit
          {stagekit_left_right kStageSweepLeft_fast kStageSweepRight_fast}
