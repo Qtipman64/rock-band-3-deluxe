@@ -795,7 +795,13 @@
                   ($new
                      {!
                         {beatmatch get_paused}})
-                  {beatmatch set_paused $new TRUE FALSE}})
+                  {beatmatch set_paused $new TRUE FALSE}
+                  {if_else $new
+                     {dx_log_writer_stagekit pause poop}
+                     {dx_log_writer_stagekit beat poop}
+                  }
+               }
+            )
             (overshell_choose_part
                {do
                   {$this begin_override_flow kOverrideFlow_SongSettings}

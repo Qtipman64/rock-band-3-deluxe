@@ -185,14 +185,24 @@
          {if
             {exists beatmatch}
             {unless $dx_customizer
-               {beatmatch
-                  set_overshell_pause
+               {if_else
                   {&&
                      {session is_local}
                      {! {modifier_mgr is_modifier_active mod_nopause}} ; dx - don't pause the game if we are in party mode
                      {'||'
                         {$this should_pause}
-                        {platform_mgr guide_showing}}}}}
+                        {platform_mgr guide_showing}
+                     }
+                  }
+                  {set $dx_should_pause TRUE}
+                  {set $dx_should_pause FALSE}
+               }
+               {beatmatch set_overshell_pause $dx_should_pause}
+               {if_else $dx_should_pause
+                  {dx_log_writer_stagekit pause poop}
+                  {dx_log_writer_stagekit beat poop}
+               }
+            }
             #ifdef HX_WII
             {if
                {!

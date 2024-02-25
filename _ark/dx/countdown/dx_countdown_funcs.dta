@@ -84,7 +84,8 @@
    ;{dx_log_writer info {sprint "func: dx_midi_parser_var_reset"}}
    ;{dx_log_writer info
       ;{sprintf "Executed dx_midi_parser_var_reset - time: %.4fms"
-         {dx_log_writer_stagekit wipe poop}
+         {dx_log_writer_stagekit wipe_all poop}
+         {dx_log_writer_stagekit venue $dx_current_venue}
          {time
             {resize $guitar_note_tracker 0} ;resize the array
             {push_back $guitar_note_tracker (none none)} ;push_back a new state into the array
@@ -108,13 +109,6 @@
 {func
    dx_get_current_beat
    {int {+ 0.5 {seconds_to_beat {/ {beatmatch get_song_ms} 1000}}}}
-}
-{func
-   dx_get_current_beat_sec
-   {set $dx_current_beat_sec_array ()}
-   {resize $dx_current_beat_sec_array 0}
-   {push_back $dx_current_beat_sec_array {/ {beatmatch get_song_ms} 1000}}
-   {write_file "GD:/dev_hdd0/game/BLUS30463/USRDIR/stagekit_current_beat.dta" $dx_current_beat_sec_array}
 }
 {func
    dx_show_solo_box

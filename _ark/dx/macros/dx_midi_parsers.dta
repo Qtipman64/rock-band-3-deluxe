@@ -93,8 +93,8 @@
       ;      {time
                {switch
                   $mp.val
-                  (12 {dx_log_writer_stagekit stagekit {sprint "(major)," {beat_to_seconds $mp.start}}})
-                  (13 {dx_log_writer_stagekit stagekit {sprint "(minor)," {beat_to_seconds $mp.start}}})
+                  (12 {dx_log_writer_stagekit data {sprint "(major)," {beat_to_seconds $mp.start}}})
+                  (13 {dx_log_writer_stagekit data {sprint "(minor)," {beat_to_seconds $mp.start}}})
                   kDataUnhandled}
       ;      }
       ;   }
@@ -107,9 +107,9 @@
    (track_name 'VENUE')
    (text
       {switch $mp.val
-         (verse {dx_log_writer_stagekit stagekit {sprint "(verse)," {beat_to_seconds $mp.start}}})
-         (chorus {dx_log_writer_stagekit stagekit {sprint "(chorus)," {beat_to_seconds $mp.start}}})
-         (lighting {dx_log_writer_stagekit stagekit {sprint {elem $mp.data 1} "," {beat_to_seconds $mp.start}}})
+         ;(verse {dx_log_writer_stagekit data {sprint "(verse)," {beat_to_seconds $mp.start}}})
+         ;(chorus {dx_log_writer_stagekit data {sprint "(chorus)," {beat_to_seconds $mp.start}}})
+         (lighting {dx_log_writer_stagekit data {sprint {elem $mp.data 1} "," {beat_to_seconds $mp.start}}})
          kDataUnhandled
       }
    )
@@ -120,7 +120,51 @@
       ;      {time
                {switch
                   $mp.val
-                  (48 {dx_log_writer_stagekit stagekit {sprint "(next)," {beat_to_seconds $mp.start}}})
+                  (48 {dx_log_writer_stagekit data {sprint "(next)," {beat_to_seconds $mp.start}}})
+                  kDataUnhandled}
+      ;      }
+      ;   }
+      ;}
+   )
+}
+{new
+   MidiParser
+   stagekit_drum_parser
+   (track_name 'PART DRUMS')
+   (midi
+      ;{dx_log_writer insane {sprint "func: check_trainer_pro_guitar"}}
+      ;{dx_log_writer insane
+      ;   {sprintf "Executed check_trainer_pro_guitar - time: %.4fms"
+      ;      {time
+               {switch
+                  $mp.val
+                  (97 {dx_log_writer_stagekit data {sprint "(snare)," {beat_to_seconds $mp.start}}})
+                  kDataUnhandled}
+      ;      }
+      ;   }
+      ;}
+   )
+}
+{new
+   MidiParser
+   stagekit_vocal_parser
+   (track_name 'PART VOCALS')
+   (midi
+      ;{dx_log_writer insane {sprint "func: check_trainer_pro_guitar"}}
+      ;{dx_log_writer insane
+      ;   {sprintf "Executed check_trainer_pro_guitar - time: %.4fms"
+      ;      {time
+               {switch
+                  $mp.val
+                  (
+                     (
+                        36 37 38 39 40 41 42 43 44 45
+                        56 57 58 59 60 61 62 63 64 65
+                        66 67 68 69 70 71 72 73 74 75
+                        76 77 78 79 80 81 82 83
+                     )
+                     {dx_log_writer_stagekit data {sprint "(vocal_end)," {beat_to_seconds $mp.end}}}
+                  )
                   kDataUnhandled}
       ;      }
       ;   }

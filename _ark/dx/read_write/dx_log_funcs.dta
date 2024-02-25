@@ -131,25 +131,87 @@
    }
 }
 #endif
+#define DX_STAGE_PRINT_DATA
+(
+   {write_file "GD:/dev_hdd0/game/BLUS30463/USRDIR/stagekit_data.dta"
+      {array
+         $dx_log_reader_stage
+      }
+   }
+)
+#define DX_STAGE_PRINT_VENUE_VAR
+(
+   {write_file "GD:/dev_hdd0/game/BLUS30463/USRDIR/stagekit_venue_type.dta"
+      {array
+         $dx_venue_type_var_stage
+      }
+   }
+)
+#define DX_STAGE_PRINT_CURRENT_BEAT
+(
+   {write_file "GD:/dev_hdd0/game/BLUS30463/USRDIR/stagekit_current_beat.dta"
+      {array
+         $dx_current_beat_sec_array
+      }
+   }
+)
 {func
    dx_log_writer_stagekit
    ($loglevel $dx_log_writer)
-   {do
-      {if_else {== $loglevel wipe}
-         {do
-            {set $dx_log_reader_stage ()}
-            {resize $dx_log_reader_stage 0}
-         }
-         {set $dx_log_reader_stage {array $dx_log_reader_stage}}
-      }
-      {if {!= $dx_log_writer poop}
-         {push_back $dx_log_reader_stage {sprint $dx_log_writer}}
-      }
-      {if {== $loglevel write}
-         {write_file "GD:/dev_hdd0/game/BLUS30463/USRDIR/stagekit_data.dta"
-            {array
-               $dx_log_reader_stage
-            }
+   {if {== $dx_detected_platform platform_rpcs3}
+      {do
+         {switch $loglevel
+            (venue
+               {set $dx_current_venue_large_venue FALSE}
+               {if
+                  {== $dx_log_writer
+                     {||
+                        arena_01 arena_02 arena_03 arena_04 arena_06 arena_07 arena_10 arena_11 arena_12 festival_01 festival_02
+                     }
+                  }
+                  {set $dx_current_venue_large_venue TRUE}
+               }
+               {set $dx_venue_type_var_stage ()}
+               {resize $dx_venue_type_var_stage 0}
+               {if_else $dx_current_venue_large_venue
+                  {push_back $dx_venue_type_var_stage true}
+                  {push_back $dx_venue_type_var_stage false}
+               }
+               {set $dx_venue_type_var_stage {array $dx_venue_type_var_stage}}
+               DX_STAGE_PRINT_VENUE_VAR
+            )
+            (beat
+               {set $dx_current_beat_sec_array ()}
+               {resize $dx_current_beat_sec_array 0}
+               {push_back $dx_current_beat_sec_array {/ {beatmatch get_song_ms} 1000}}
+               DX_STAGE_PRINT_CURRENT_BEAT
+            )
+            (wipe_all
+               {set $dx_venue_type_var_stage ()}
+               {resize $dx_venue_type_var_stage 0}
+               {set $dx_log_reader_stage ()}
+               {resize $dx_log_reader_stage 0}
+               {set $dx_current_beat_sec_array ()}
+               {resize $dx_current_beat_sec_array 0}
+               DX_STAGE_PRINT_VENUE_VAR
+               DX_STAGE_PRINT_DATA
+               DX_STAGE_PRINT_CURRENT_BEAT
+            )
+            (pause
+               {set $dx_current_beat_sec_array ()}
+               {resize $dx_current_beat_sec_array 0}
+               DX_STAGE_PRINT_CURRENT_BEAT
+            )
+            (data
+               {set $dx_log_reader_stage {array $dx_log_reader_stage}}
+               {if {!= $dx_log_writer poop}
+                  {push_back $dx_log_reader_stage {sprint $dx_log_writer}}
+               }
+            )
+            (write
+               {set $dx_log_reader_stage {array $dx_log_reader_stage}}
+               DX_STAGE_PRINT_DATA
+            )
          }
       }
    }
