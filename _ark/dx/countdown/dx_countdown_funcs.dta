@@ -114,7 +114,7 @@
    {set $dx_current_beat_sec_array ()}
    {resize $dx_current_beat_sec_array 0}
    {push_back $dx_current_beat_sec_array {/ {beatmatch get_song_ms} 1000}}
-   {write_file "GD:/dev_hdd0/game/BLUS30463/USRDIR/current_beat.dta" $dx_current_beat_sec_array}
+   {write_file "GD:/dev_hdd0/game/BLUS30463/USRDIR/stagekit_current_beat.dta" $dx_current_beat_sec_array}
 }
 {func
    dx_show_solo_box
