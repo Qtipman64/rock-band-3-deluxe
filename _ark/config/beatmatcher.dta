@@ -9,7 +9,6 @@
       {dx_calc_overdrive guitar}
       {dx_calc_overdrive drum}
       {dx_calc_overdrive real_drum}
-      {dx_get_current_beat_sec}
       #ifdef HX_WII
       {unless
          $stagekit

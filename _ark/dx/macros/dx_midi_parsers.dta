@@ -93,8 +93,34 @@
       ;      {time
                {switch
                   $mp.val
-                  (12 {dx_log_writer_stagekit stagekit {sprint "(major) - " {beat_to_seconds $mp.start}}})
-                  (13 {dx_log_writer_stagekit stagekit {sprint "(minor) - " {beat_to_seconds $mp.start}}})
+                  (12 {dx_log_writer_stagekit stagekit {sprint "(major)," {beat_to_seconds $mp.start}}})
+                  (13 {dx_log_writer_stagekit stagekit {sprint "(minor)," {beat_to_seconds $mp.start}}})
+                  kDataUnhandled}
+      ;      }
+      ;   }
+      ;}
+   )
+}
+{new
+   MidiParser
+   next_parser
+   (track_name 'VENUE')
+   (text
+      {switch $mp.val
+         (verse {dx_log_writer_stagekit stagekit {sprint "(verse)," {beat_to_seconds $mp.start}}})
+         (chorus {dx_log_writer_stagekit stagekit {sprint "(chorus)," {beat_to_seconds $mp.start}}})
+         (lighting {dx_log_writer_stagekit stagekit {sprint {elem $mp.data 1} "," {beat_to_seconds $mp.start}}})
+         kDataUnhandled
+      }
+   )
+   (midi
+      ;{dx_log_writer insane {sprint "func: check_trainer_pro_guitar"}}
+      ;{dx_log_writer insane
+      ;   {sprintf "Executed check_trainer_pro_guitar - time: %.4fms"
+      ;      {time
+               {switch
+                  $mp.val
+                  (48 {dx_log_writer_stagekit stagekit {sprint "(next)," {beat_to_seconds $mp.start}}})
                   kDataUnhandled}
       ;      }
       ;   }

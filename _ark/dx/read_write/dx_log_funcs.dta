@@ -136,7 +136,10 @@
    ($loglevel $dx_log_writer)
    {do
       {if_else {== $loglevel wipe}
-         {set $dx_log_reader_stage ()}
+         {do
+            {set $dx_log_reader_stage ()}
+            {resize $dx_log_reader_stage 0}
+         }
          {set $dx_log_reader_stage {array $dx_log_reader_stage}}
       }
       {if {!= $dx_log_writer poop}

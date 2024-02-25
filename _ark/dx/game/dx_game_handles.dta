@@ -1,11 +1,24 @@
 #define DX_GAME_PANEL_HANDLES
 (
    (dx_on_game_enter
-      {dx_log_writer_stagekit write poop}
       ;{dx_log_writer info {sprint "func: dx_on_game_enter"}}
       ;{dx_log_writer info
       ;   {sprintf "Executed dx_on_game_enter - time: %.4fms"
             {time
+               {dx_log_writer_stagekit write poop}
+               {if {exists print_stage_timer}
+                  {delete print_stage_timer}
+               }
+               {thread_task kTaskSeconds
+                  (name print_stage_timer)
+                  (script
+                     {if {exists beatmatch}
+                        {dx_get_current_beat_sec}
+                     }
+                     {$task sleep 30}
+                     {$task loop}
+                  )
+               }
                {dx_set_auto_play}
                {dx_game_var_reset}
                {unless {gamemode in_mode trainer}
@@ -33,6 +46,9 @@
       ;{dx_log_writer info
       ;   {sprintf "Executed dx_on_game_exit - time: %.4fms"
             {time
+               {if {exists print_stage_timer}
+                  {delete print_stage_timer}
+               }
                {unless {gamemode in_mode trainer}
                   {set $dx_already_restarted FALSE} ; dx - track resets for no BRE modifier
                   {set $dx_mtvup FALSE} ;we have to make sure and turn off mtv overlay when it is unloaded or it can crash in places where we call it (overshell)
